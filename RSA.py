@@ -1,4 +1,4 @@
-import random, sys, os, rabinMiller, cryptomath
+import random, rabinMiller, cryptomath
 
 
 def main():
