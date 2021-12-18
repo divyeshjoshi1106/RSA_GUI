@@ -45,7 +45,9 @@ bg_label = Label(root, image=bg)
 bg_label.place(relwidth=1, relheight=1)
 frame = Frame(root, bg='#de2323')
 frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.8, anchor='n')
+do_frame = Frame(frame, bg='#cbde23')
+do_frame.place(relx=0.5, rely=0.1, relwidth=1, relheight=1, anchor='n')
 
-draw_start_page(frame)
+draw_start_page(do_frame)
 
 root.mainloop()

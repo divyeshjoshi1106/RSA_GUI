@@ -2,13 +2,15 @@ from tkinter import *
 from PIL import ImageTk, Image
 from docutils.nodes import comment
 
+from main import go_to_page
 
 HEIGHT = 700
 WIDTH = 800
 
 
-def info_rsa(main_frame):
-    clear_frame(main_frame)
+def rsa_tutorial_1(global_frame):
+    main_frame = Frame(global_frame, bg='#cbde23')
+    main_frame.place(relx=0.5, rely=0, relwidth=1, relheight=1, anchor='n')
 
     top_frame = Frame(main_frame, bg='#80c1ff')
     top_frame.place(relx=0.5, rely=0.05, relwidth=1, relheight=0.15, anchor='n')
@@ -26,19 +28,14 @@ def info_rsa(main_frame):
                        "was developed secretly, in 1973 at GCHQ (the British signals intelligence agency), \n"
                        "by the English mathematician Clifford Cocks. That system was declassified in 1997")
 
-    # bottom_frame = Frame(main_frame, bg='#80c1ff')
-    # bottom_frame.place(relx=0.5, rely=0.8, relwidth=1, relheight=0.15, anchor='n')
-    # button = Button(bottom_frame, text='BEFORE', bg='gray', command=lambda: info_rsa(main_frame))
-    # button.place(relx=0.0, rely=0.4, relwidth=0.25, relheight=0.25)
-    # button2 = Button(bottom_frame, text='HOME', bg='gray', command=lambda: info_rsa(main_frame))
-    # button2.place(relx=0.4, rely=0.4, relwidth=0.25, relheight=0.25)
-    # button3 = Button(bottom_frame, text='decrypt', bg='gray', command=lambda: info_rsa(main_frame))
-    # button3.place(relx=0.75, rely=0.4, relwidth=0.25, relheight=0.25)
+    bottom_frame = Frame(main_frame, bg='#80c1ff')
+    bottom_frame.place(relx=0.5, rely=0.8, relwidth=1, relheight=0.15, anchor='n')
+    button = Button(bottom_frame, text='BEFORE', bg='gray')
+    button.place(relx=0.0, rely=0.4, relwidth=0.25, relheight=0.25)
+    button2 = Button(bottom_frame, text='HOME', bg='gray', command=lambda: go_to_page("home"))
+    button2.place(relx=0.4, rely=0.4, relwidth=0.25, relheight=0.25)
 
 
-def clear_frame(frame_to_delete):
-    for widget in frame_to_delete.winfo_children():
-        widget.destroy()
 
 
 # RSA (Rivest–Shamir–Adleman) is a public-key cryptosystem that is widely used for secure data transmission.
