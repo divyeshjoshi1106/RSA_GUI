@@ -1,10 +1,18 @@
 def gcd(a, b):
+    """
+    Find the greatest common divisor of the numbers 'a' and 'b' with the euclidean algorithm.
+    :return: The greatest common divisor of 'a' and 'b'.
+    """
     while a != 0:
         a, b = b % a, a
     return b
 
 
-def findModInverse(a, m):
+def find_modular_inverse(a, m):
+    """
+    Calculate the modular inverse of the numbers 'a' and 'm'.
+    :return: The modular inverse of 'a' and 'm'.
+    """
     if gcd(a, m) != 1:
         return None
     u1, u2, u3 = 1, 0, a
