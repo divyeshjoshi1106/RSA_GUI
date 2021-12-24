@@ -1,4 +1,4 @@
-import random, rabinMiller, cryptomath
+import random, rabin_miller, cryptomath
 
 
 def main():
@@ -23,9 +23,9 @@ def main():
 def generateKey(keySize):
     # Step 1: Create two prime numbers, p and q. Calculate n = p * q.
     print('Generating p prime...')
-    p = rabinMiller.generateLargePrime(keySize)
+    p = rabin_miller.generate_large_prime(keySize)
     print('Generating q prime...')
-    q = rabinMiller.generateLargePrime(keySize)
+    q = rabin_miller.generate_large_prime(keySize)
     n = p * q
 
     # Step 2: Create a number e that is relatively prime to (p-1)*(q-1).
@@ -37,7 +37,7 @@ def generateKey(keySize):
 
     # Step 3: Calculate d, the mod inverse of e.
     print('Calculating d that is mod inverse of e...')
-    d = cryptomath.findModInverse(e, (p - 1) * (q - 1))
+    d = cryptomath.find_modular_inverse(e, (p - 1) * (q - 1))
     # publicKey = (n, e)
     # privateKey = (n, d)
     # print('Public key:', publicKey)
