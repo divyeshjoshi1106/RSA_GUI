@@ -2,6 +2,7 @@
 
 from tkinter import *
 from PIL import ImageTk, Image
+import encrypt
 
 HEIGHT = 700
 WIDTH = 800
@@ -39,6 +40,11 @@ def go_to_page(next_page):
     elif next_page == "rsa_tutorial_3":
         back_stack.append("rsa_tutorial_2")
         rsa_tutorial_3()
+    elif next_page == "encrypt":
+        print("HI")
+    elif next_page == "decrypt":
+        back_stack.append("home")
+        decrypt()
 
 
 def go_home():
@@ -66,13 +72,13 @@ def go_home():
     bottom_frame = Frame(main_frame, bg='#80c1ff')
     bottom_frame.place(relx=0.5, rely=0.8, relwidth=1, relheight=0.15, anchor='n')
     global left_button
-    left_button = Button(bottom_frame, text='What is RSA?', bg='gray', command=lambda: go_to_page("rsa_tutorial_1"))
+    left_button = Button(bottom_frame, text='What is RSA?', bg='gray', command=go_to_page("rsa_tutorial_1"))
     left_button.place(relx=0.0, rely=0.4, relwidth=0.25, relheight=0.25)
     global center_button
-    center_button = Button(bottom_frame, text='Encrypt', bg='gray')
+    center_button = Button(bottom_frame, text='Encrypt', bg='gray', command=go_to_page("encrypt"))
     center_button.place(relx=0.4, rely=0.4, relwidth=0.25, relheight=0.25)
     global right_button
-    right_button = Button(bottom_frame, text='decrypt', bg='gray')
+    right_button = Button(bottom_frame, text='Decrypt', bg='gray', command=go_to_page("decrypt"))
     right_button.place(relx=0.75, rely=0.4, relwidth=0.25, relheight=0.25)
 
 
@@ -91,9 +97,9 @@ def rsa_tutorial_1():
                            "Encryption is needed in order to protect private and sensitive data,\n"\
                            "such as personal information, credit card information.\n\n"\
                            "Continue to find out more about public-key cryptography!")
-    left_button.config(text="BEFORE", command=lambda: go_to_page("back"))
-    center_button.config(text="HOME", command=lambda: go_to_page("home"))
-    right_button.config(text="NEXT", command=lambda: go_to_page("rsa_tutorial_2"))
+    left_button.config(text="BEFORE", command=go_to_page("back"))
+    center_button.config(text="HOME", command=go_to_page("home"))
+    right_button.config(text="NEXT", command=go_to_page("rsa_tutorial_2"))
 
 
 def rsa_tutorial_2():
@@ -118,7 +124,7 @@ def rsa_tutorial_2():
                        "Anyone with the public key can combine the key with the signature to check if the message\n"
                        "is as expected. If the message is as expected, then it can be assumed that this digital\n"
                        "signature was created by the owner and was not tampered with.")
-    right_button.config(command=lambda: go_to_page("rsa_tutorial_3"))
+    right_button.config(command=go_to_page("rsa_tutorial_3"))
 
 
 def rsa_tutorial_3():
@@ -143,7 +149,28 @@ def rsa_tutorial_3():
                        "For decryption, m=(c^d)mod(n)."
                        "For digital signatures, sig=(m^d)mod(n), with \"m\" as message to be signed, \"d\" as private\n"
                        "key, \"sig\" as signature. For verifying digital signatures, m=(sig^e)mod(n)")
-    right_button.config(text="Check out RSA encryption!", command=lambda: go_to_page("encrypt"))
+    right_button.config(text="Check out RSA encryption!", command=go_to_page("encrypt"))
+
+
+def decrypt():
+    keysize = 32
+
+    e, d, n, p, q, phi = encrypt.generate_keys(keysize)
+
+    msg = "This is an example of RSA encryption/decryption :)"
+
+    enc = encrypt.encrypt(e, n, msg)
+    dec = encrypt.decrypt(d, n, enc)
+
+    title_label.config(text="Example of RSA decryption")
+    body_label.config(text="This is an example of RSA decryption.\n"
+                      f"The original message is \"{msg}\"."
+                      f"We use the public keys: {e} and {n}, the private key: {d}\nand the parameters: {p}, {q}, and {phi}."
+                      f"This is what the same message looks like when encrypted:\n{enc}."
+                      f"This is what the ciphertext (encrypted message) looks like when we decrypt it again:\n{dec}.")
+    left_button.config(text="BEFORE", command=go_to_page("back"))
+    center_button.config(text="HOME", command=go_to_page("home"))
+    right_button.config(text="Check out RSA encryption!", command=go_to_page("encrypt"))
 
 
 def clear_frame():
