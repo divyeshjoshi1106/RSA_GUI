@@ -12,6 +12,7 @@ frame = None
 # Global variables for title label, main body label, and left, center, right buttons
 title_label = None
 body_label = None
+body_label_button = None
 left_button = None
 center_button = None
 right_button = None
@@ -44,7 +45,7 @@ def go_to_page(next_page):
         print("HI")
     elif next_page == "decrypt":
         back_stack.append("home")
-        decrypt()
+        decrypt_example()
 
 
 def go_home():
@@ -152,15 +153,9 @@ def rsa_tutorial_3():
     right_button.config(text="Check out RSA encryption!", command=lambda: go_to_page("encrypt"))
 
 
-def decrypt():
-    keysize = 32
-
-    e, d, n, p, q, phi = encrypt.generate_keys(keysize)
-
+def decrypt_example():
     msg = "This is an example of RSA encryption/decryption :)"
-
-    enc = encrypt.encrypt(e, n, msg)
-    dec = encrypt.decrypt(d, n, enc)
+    e, d, n, p, q, phi, enc, dec = decrypt("This is an example of RSA encryption/decryption :)")
 
     title_label.config(text="Example of RSA decryption")
     body_label.config(text="This is an example of RSA decryption.\n"
@@ -168,6 +163,9 @@ def decrypt():
                       f"We use the public keys: {e} and {n}, the private key: {d}\nand the parameters: {p}, {q}, and {phi}."
                       f"This is what the same message looks like when encrypted:\n{enc}."
                       f"This is what the ciphertext (encrypted message) looks like when we decrypt it again:\n{dec}.")
+    global body_label_button
+    body_label_button = Button(body_label, text='Again!', bg='red', command=lambda: decrypt_example())
+    body_label_button.place(relx=0.9, rely=0, relwidth=0.1, relheight=0.1)
     left_button.config(text="BEFORE", command=lambda: go_to_page("back"))
     center_button.config(text="HOME", command=lambda: go_to_page("home"))
     right_button.config(text="Check out RSA encryption!", command=lambda: go_to_page("encrypt"))
@@ -181,6 +179,16 @@ def clear_frame():
     for widget in frame.winfo_children():
         widget.destroy()
 
+
+def decrypt(msg):
+    keysize = 32
+
+    e, d, n, p, q, phi = encrypt.generate_keys(keysize)
+
+    enc = encrypt.encrypt(e, n, msg)
+    dec = encrypt.decrypt(d, n, enc)
+
+    return e, d, n, p, q, phi, enc, dec
 
 if __name__ == '__main__':
     root = Tk()
