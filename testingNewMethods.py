@@ -62,6 +62,7 @@ def main():
     print(f'e={e}')
 
     text = 'Hi this is a secret msg'
+    print(f'text before encoding = {text}')
     cipher = encrypt(e, n, text)
     print(f'encrypted text integer ={cipher}')
     msg = decrypt(d, n, cipher)
