@@ -1,6 +1,7 @@
 import random
 import rabin_miller
 import cryptomath
+import binascii
 
 
 def generate_keys(keysize=512):
@@ -37,22 +38,14 @@ def generate_keys(keysize=512):
 
 
 def encrypt(e, n, msg):
-    cipher = ""
+    plain_text = int(binascii.hexlify(msg.encode()), 16)
 
-    for c in msg:
-        m = ord(c)
-        cipher += str(pow(m, e, n)) + " "
+    cipher = pow(plain_text, e, n)
 
     return cipher
 
 
 def decrypt(d, n, cipher):
-    msg = ""
+    msg = pow(cipher, d, n)
 
-    parts = cipher.split()
-    for part in parts:
-        if part:
-            c = int(part)
-            msg += chr(pow(c, d, n))
-
-    return msg
+    return binascii.unhexlify(hex(msg)[2:]).decode()
